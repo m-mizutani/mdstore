@@ -1,0 +1,29 @@
+{
+  "name": "mdstore",
+  "version": "0.1.0",
+  "description": "Malicious Domain name Store",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m-mizutani/mdstore.git"
+  },
+  "author": "Masayoshi Mizutani",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/m-mizutani/mdstore/issues"
+  },
+  "homepage": "https://github.com/m-mizutani/mdstore#readme",
+  "dependencies": {
+    "async": "^2.1.4",
+    "msgpack": "^1.0.2",
+    "redis": "^2.6.3",
+    "request": "^2.79.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "should": "^11.1.2"
+  }
+}
