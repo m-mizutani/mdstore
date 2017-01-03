@@ -2,6 +2,6 @@
 
 'use strict';
 
-require('../index.js');
+require('../mdstore');
 
 console.log('cli mdstore');

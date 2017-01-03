@@ -2,7 +2,7 @@
   "name": "mdstore",
   "version": "0.1.0",
   "description": "Malicious Domain name Store",
-  "main": "index.js",
+  "main": "mdstore.js",
   "scripts": {
     "test": "mocha -t 30000"
   },

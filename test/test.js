@@ -1,4 +1,4 @@
-const mdstore = require('../index');
+const mdstore = require('../mdstore');
 const should = require('should');
 
 const AVAIL_DOMAIN_NAME = 'g.zedo.com';
