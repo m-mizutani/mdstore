@@ -57,6 +57,12 @@ module.exports.Redis = class Redis {
       }
     });
   }
+
+  flush(callback) {
+    this.client_.flushdb((err, res) => {
+      callback(err);
+    });
+  }
 }
 
 module.exports.File = class File {
@@ -64,7 +70,5 @@ module.exports.File = class File {
   }
 
   sync() {
-  }
-
-  
+  }  
 }
