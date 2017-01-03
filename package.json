@@ -4,7 +4,7 @@
   "description": "Malicious Domain name Store",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -t 30000"
   },
   "repository": {
     "type": "git",
