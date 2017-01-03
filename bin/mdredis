@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+
+const argv = require('argv');
+
+const mdstore = require('../mdstore');
+const mdredis = new mdstore.Redis();
+
+const args = argv.run();
+
+function usage() {
+	console.log('syntax) mdredis <command>');
+  process.exit();
+}
+
+if (args.targets.length === 0) {
+  usage();
+} else if (args.targets[0] === 'sync') {
+	mdredis.sync((err) => {
+    process.exit();
+	});
+} else if (args.targets[0] === 'has') {
+  mdredis.has(args.targets[1], (err, res) => {
+    if (err) {
+      console.error('Error:', err);
+    } else {
+      console.log(res);
+    }
+    process.exit();
+  });
+}
+
+
+console.log(argv.run());

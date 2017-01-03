@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/m-mizutani/mdstore#readme",
   "dependencies": {
+    "argv": "0.0.2",
     "async": "^2.1.4",
     "msgpack-lite": "^0.1.26",
     "redis": "^2.6.3",
