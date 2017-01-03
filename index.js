@@ -2,7 +2,7 @@
 
 const reqest = require('request');
 const redis = require('redis');
-const msgpack = require('msgpack');
+const msgpack = require('msgpack-lite');
 const async = require('async');
 
 module.exports.Redis = class Redis {
@@ -27,7 +27,7 @@ module.exports.Redis = class Redis {
         }).filter((dname) => { return dname !== undefined; });
 
         async.each(domain_list, (dname, next) => {
-          const obj = msgpack.pack({
+          const obj = msgpack.encode({
             source: 'mvps',
             ts: ts,
           });
@@ -51,7 +51,7 @@ module.exports.Redis = class Redis {
         callback(err, undefined);
       } else {
         const logs = res.map((raw) => {
-          return msgpack.unpack(Buffer.from(raw));
+          return msgpack.decode(Buffer.from(raw));
         });
         callback(undefined, (logs.length > 0));
       }
