@@ -17,7 +17,7 @@ module.exports.Redis = class Redis {
     reqest.get(url, (err, res, body) => {
       if (err) {
         console.log('request Error:', err);
-        callback();
+        callback(err);
       } else {
         const domain_list = body.split('\n').map((line) => {
           return line.split(' ');
@@ -39,7 +39,7 @@ module.exports.Redis = class Redis {
           if (err) {
             console.log('redis async error:', err);
           }
-          callback();          
+          callback(); 
         });
       }
     });
@@ -58,6 +58,19 @@ module.exports.Redis = class Redis {
     });
   }
 
+  get(domain, callback) {
+    this.client_.lrange(domain, 0, -1, (err, res) => {
+      if (err) {
+        callback(err, undefined);
+      } else {
+        const logs = res.map((raw) => {
+          return msgpack.decode(Buffer.from(raw));
+        });
+        callback(undefined, logs);
+      }
+    });
+  }
+  
   flush(callback) {
     this.client_.flushdb((err, res) => {
       callback(err);

@@ -1,5 +1,6 @@
 const mdstore = require('../mdstore');
 const should = require('should');
+const assert = require("power-assert");
 
 const AVAIL_DOMAIN_NAME = 'g.zedo.com';
 const NG_DOMAIN_NAME    = 'domain.not.found';
@@ -30,6 +31,13 @@ describe('redis', () => {
         done();
       });
     });
+
+    it('get domain name', (done) => {
+      md.get(AVAIL_DOMAIN_NAME, (err, res) => {
+        assert(res.length > 0);
+        done();
+      });
+    });    
   });
 
   describe('flush db', () => {
