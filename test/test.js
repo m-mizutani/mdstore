@@ -1,18 +1,17 @@
 const mdstore = require('../mdstore');
-const should = require('should');
 const assert = require("power-assert");
 
 const AVAIL_DOMAIN_NAME = 'g.zedo.com';
 const NG_DOMAIN_NAME    = 'domain.not.found';
 
 describe('redis', () => {
-  describe('basic', () => {
+  context('basic', () => {
     const md = new mdstore.Redis();
     before('basic', (done) => {
       md.flush((err) => {
-        should.not.exist(err);
+        assert(err === null);
         md.sync((err) => {
-          should.not.exist(err);
+          assert(err === null);
           done();
         });
       });
@@ -20,33 +19,36 @@ describe('redis', () => {
     
     it('found domain name', (done) => {
       md.has(AVAIL_DOMAIN_NAME, (err, res) => {
-        res.should.equal(true);      
+        assert(err === null);
+        assert(res === true);
         done();
       });
     });
 
     it('found no domain name', (done) => {
       md.has(NG_DOMAIN_NAME, (err, res) => {
-        res.should.equal(false);
+        assert(err === null);
+        assert(res === false);
         done();
       });
     });
 
     it('get domain name', (done) => {
       md.get(AVAIL_DOMAIN_NAME, (err, res) => {
+        assert(err === null);
         assert(res.length > 0);
         done();
       });
     });    
   });
 
-  describe('flush db', () => {
+  context('flush db', () => {
     const md = new mdstore.Redis();
     before('basic', (done) => {
       md.flush((err) => {
-        should.not.exist(err);
+        assert(err === null);
         md.sync((err) => {
-          should.not.exist(err);
+          assert(err === null);
           done();
         });
       });
@@ -54,9 +56,10 @@ describe('redis', () => {
 
     it('find after flush', (done) => {
       md.flush((err) => {
-        should.not.exist(err);
+        assert(err === null);
         md.has(AVAIL_DOMAIN_NAME, (err, res) => {
-          res.should.equal(false);
+          assert(err === null);
+          assert(res === false);
           done();
         });
       });

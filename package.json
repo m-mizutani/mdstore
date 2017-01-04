@@ -25,8 +25,7 @@
   },
   "devDependencies": {
     "mocha": "^3.2.0",
-    "power-assert": "^1.4.2",
-    "should": "^11.1.2"
+    "power-assert": "^1.4.2"
   },
   "bin": {
     "mdstore": "bin/mdstore"

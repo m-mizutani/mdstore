@@ -39,7 +39,7 @@ module.exports.Redis = class Redis {
           if (err) {
             console.log('redis async error:', err);
           }
-          callback(); 
+          callback(null); 
         });
       }
     });
@@ -53,7 +53,7 @@ module.exports.Redis = class Redis {
         const logs = res.map((raw) => {
           return msgpack.decode(Buffer.from(raw));
         });
-        callback(undefined, (logs.length > 0));
+        callback(null, (logs.length > 0));
       }
     });
   }
@@ -66,7 +66,7 @@ module.exports.Redis = class Redis {
         const logs = res.map((raw) => {
           return msgpack.decode(Buffer.from(raw));
         });
-        callback(undefined, logs);
+        callback(null, logs);
       }
     });
   }
