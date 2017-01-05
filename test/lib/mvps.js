@@ -1,9 +1,6 @@
 const mvps = require('../../lib/mvps.js');
 const assert = require("power-assert");
 
-const AVAIL_DOMAIN_NAME = 'g.zedo.com';
-const NG_DOMAIN_NAME    = 'domain.not.found';
-
 const opt = {
   url: 'https://raw.githubusercontent.com/m-mizutani/mdstore/master/test/data/mvps.txt',
 };
