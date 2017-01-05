@@ -1,1 +1,1 @@
---recursive -t 10000
+--require intelli-espower-loader --recursive -t 10000
