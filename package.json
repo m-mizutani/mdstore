@@ -4,7 +4,7 @@
   "description": "Malicious Domain name Store",
   "main": "mdstore.js",
   "scripts": {
-    "test": "mocha -t 30000"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
