@@ -1,7 +1,7 @@
 mdstore
 ========================
 
-mdstore is Malicious Domain name Store, maintainance engine of blacklisted domain name.
+**mdstore** is Malicious Domain name Store, maintainance engine of blacklisted domain name.
 
 
 Example
@@ -13,14 +13,19 @@ mdstore.sync((err) => {
   // synced
 	mdstore.has('is.the.domain.malicious.com', (err, res) => {
 	  if (res) {
-		  console.log('yes, the domain name is malicious one');
+		  console.log('yes, the domain name is malicious');
 	  } else {
-		  console.log('no, he is benign');
+		  console.log('no, this is benign');
 		}
 	});
 });
 ```
 
+Supporting Blacklists
+----------
+
+- **DNS-BH – Malware Domain Blocklist**: [BH DNS Files](http://www.malwaredomains.com/?page_id=66)
+- **MVPS**: [Blocking Unwanted Connections with a Hosts File](http://winhelp2002.mvps.org/hosts.htm)
 
 
 Access to Redis by CLI

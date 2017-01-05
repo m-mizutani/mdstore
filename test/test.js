@@ -1,7 +1,7 @@
 const mdstore = require('../mdstore');
 const assert = require("power-assert");
 
-const AVAIL_DOMAIN_NAME = 'g.zedo.com';
+const AVAIL_DOMAIN_NAME = 'g.zedo.com';  // from MVPS
 const NG_DOMAIN_NAME    = 'domain.not.found';
 
 describe('redis', () => {
@@ -17,14 +17,6 @@ describe('redis', () => {
       });
     });
     
-    it('found domain name', (done) => {
-      md.has(AVAIL_DOMAIN_NAME, (err, res) => {
-        assert(err === null);
-        assert(res === true);
-        done();
-      });
-    });
-
     it('found no domain name', (done) => {
       md.has(NG_DOMAIN_NAME, (err, res) => {
         assert(err === null);
@@ -33,13 +25,21 @@ describe('redis', () => {
       });
     });
 
-    it('get domain name', (done) => {
-      md.get(AVAIL_DOMAIN_NAME, (err, res) => {
+    it('get domain name (MVPS)', (done) => {      
+      md.get('g.zedo.com', (err, res) => {
         assert(err === null);
         assert(res.length > 0);
         done();
       });
-    });    
+    });
+
+    it('get domain name (dnsbh)', (done) => {      
+      md.get('spaceconstruction.com.au', (err, res) => {
+        assert(err === null);
+        assert(res.length > 0);
+        done();
+      });
+    });
   });
 
   context('flush db', () => {

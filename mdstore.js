@@ -6,7 +6,8 @@ const msgpack = require('msgpack-lite');
 const async = require('async');
 
 const mdstore_modules = {
-  mvps: require('./lib/mvps'),
+  mvps:  require('./lib/mvps'),
+  dnsbh: require('./lib/dnsbh'),
 };
 
 module.exports.Redis = class Redis {
