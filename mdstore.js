@@ -5,42 +5,47 @@ const redis = require('redis');
 const msgpack = require('msgpack-lite');
 const async = require('async');
 
+const mdstore_modules = {
+  mvps: require('./lib/mvps'),
+};
+
 module.exports.Redis = class Redis {
   constructor(db, port, host) {
     this.client_ = redis.createClient(port, host);    
   }
- 
+
   sync(callback) {
     const self = this;
-    const ts = (new Date()).getTime() / 1000;
-    const url = 'http://winhelp2002.mvps.org/hosts.txt';
-    reqest.get(url, (err, res, body) => {
-      if (err) {
-        console.log('request Error:', err);
-        callback(err);
-      } else {
-        const domain_list = body.split('\n').map((line) => {
-          return line.split(' ');
-        }).map((token) => {
-          return (token.length < 2 || token[0].substr(0, 1) === '#') ?
-              undefined : token[1].replace(/\s*$/, '');
-        }).filter((dname) => { return dname !== undefined; });
 
-        async.each(domain_list, (dname, next) => {
-          const obj = msgpack.encode({
-            source: 'mvps',
-            ts: ts,
-          });
+    const modules = Object.keys(mdstore_modules).map((mod_name) => {
+      return new mdstore_modules[mod_name]();
+    });
 
-          self.client_.rpush(dname, obj, (err, reply) => {
-            next();
-          });
-        }, (err) => {
-          if (err) {
-            console.log('redis async error:', err);
-          }
-          callback(null); 
+    const errmsg = [];
+    async.each(modules, (mod, next) => {
+      // console.log('run', mod);
+
+      mod.fetch((dname, attrib, done) => {
+        self.client_.rpush(dname, msgpack.encode(attrib), (err, reply) => {
+          done();
         });
+      }, (err) => {
+        // console.log('done:', mod);
+        if (err) {
+          errmsg.push(err);
+        }
+        next();
+      });
+
+    }, (err) => {
+      // console.log('done');
+
+      if (err) {
+        callback(err);
+      } else if (errmsg.length > 0) {
+        callback(errmsg.join(', '));
+      } else {
+        callback(null);
       }
     });
   }
@@ -70,7 +75,7 @@ module.exports.Redis = class Redis {
       }
     });
   }
-  
+
   flush(callback) {
     this.client_.flushdb((err, res) => {
       callback(err);
@@ -83,5 +88,5 @@ module.exports.File = class File {
   }
 
   sync() {
-  }  
+  }
 }
