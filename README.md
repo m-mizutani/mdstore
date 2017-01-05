@@ -24,8 +24,10 @@ mdstore.sync((err) => {
 Supporting Blacklists
 ----------
 
-- **DNS-BH – Malware Domain Blocklist**: [BH DNS Files](http://www.malwaredomains.com/?page_id=66)
+- **DNS-BH – Malware Domain Blocklist**: [BH DNS Files](http://www.malwaredomains.com/?page_id=66), [Terms of Use](http://www.malwaredomains.com/?page_id=1508)
 - **MVPS**: [Blocking Unwanted Connections with a Hosts File](http://winhelp2002.mvps.org/hosts.htm)
+
+NOTE: Author has no concern with usage of this module. Please read each blacklist service's Terms of Use, particularly for business.
 
 
 Access to Redis by CLI
