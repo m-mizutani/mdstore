@@ -1,0 +1,5 @@
+##  This is dummy file for DNS-DB doamin.txt
+##  comment
+		oreore.example.com	phishing	openphish.com	20160527	20160108
+		korekore.example.org	attackpage	safebrowsing.clients.google.com	20160527	20160405	20160304	20160113	20140625	20131223	20130320
+		hoge.example.net	malicious	app.webinspector.com	20160527	20160304	20150307	20141231	20120204
