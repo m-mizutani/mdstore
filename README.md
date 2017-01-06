@@ -45,7 +45,7 @@ Example usage of mdstore library
 ----------
 
 ```js
-var mdstore = require('mdstore').Redis();
+var mdstore = new (require('mdstore')).Redis();
 mdstore.update((err) => {
   // synced
 	mdstore.has('is.the.domain.malicious.com', (err, res) => {
