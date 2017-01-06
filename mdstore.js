@@ -13,7 +13,10 @@ const mdstore_modules = {
 
 module.exports.Redis = class Redis {
   constructor(prefs = {}, db, port, host) {
-    this.client_ = redis.createClient(port, host);
+    const opt = {
+      return_buffers: true,
+    };
+    this.client_ = redis.createClient(port, host, opt);
     this.prefs_ = prefs;
   }
 
@@ -73,9 +76,19 @@ module.exports.Redis = class Redis {
         callback(err, undefined);
       } else {
         const logs = res.map((raw) => {
-          return msgpack.decode(Buffer.from(raw));
+          return msgpack.decode(raw);
         });
         callback(null, logs);
+      }
+    });
+  }
+
+  all(callback) {
+    this.client_.keys('*', (err, res) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, res.map((r) => { return r.toString(); }));
       }
     });
   }

@@ -2,6 +2,93 @@
 
 'use strict';
 
-require('../mdstore');
+const argv = require('argv');
 
-console.log('cli mdstore');
+const mdstore = require('../mdstore');
+
+const args = argv.run();
+
+function usage_and_exit() {
+	console.error('syntax) mdredis [update | get | list | hosts] <options...>');
+  process.exit(1);
+}
+
+if (args.targets.length === 0) {
+  usage_and_exit();
+}
+
+
+const mdredis = new mdstore.Redis();
+
+const cmd = {
+  update() {
+	  mdredis.update((err) => {
+      if (err) {
+        console.error('update: Error,', err);
+        process.exit(1);
+      } else {
+        console.error('update: OK');
+        process.exit(0);
+      }
+	  });
+  },
+
+  get() {
+    mdredis.get(args.targets[1], (err, res) => {
+      if (err) {
+        console.error('get: Error,', err);
+        process.exit(1);
+      } else {
+        res.sort((a, b) => {
+          return a.ts - b.ts;
+        }).map(r => {
+          const dt = (r.ts) ? new Date(r.ts * 1000) : '--';
+          console.log(dt, r);
+        });
+
+        process.exit(0);
+      }
+    });
+  },
+
+  list() {
+    mdredis.all((err, res) => {
+      if (err) {
+        console.error('list: Error,', err);
+        process.exit(1);
+      } else {
+        res.map(key => {
+          console.log(key);
+        });
+        process.exit(0);
+      }
+    });
+  },
+
+  hosts() {
+    mdredis.all((err, res) => {
+      if (err) {
+        console.error('list: Error,', err);
+        process.exit(1);
+      } else {
+        console.log('127.0.0.1\tlocalhost');
+        console.log('::1\tlocalhost');
+        
+        res.map(key => {
+          console.log(`127.0.0.1\t${key}`);
+        });
+        
+        process.exit(0);
+      }
+    });
+  },
+};
+
+const c = cmd[args.targets[0]];
+
+if (c === undefined) {
+  usage_and_exit();
+} else {
+  c();
+}
+
