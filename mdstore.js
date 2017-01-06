@@ -8,6 +8,7 @@ const async = require('async');
 const mdstore_modules = {
   mvps:  require('./lib/mvps'),
   dnsbh: require('./lib/dnsbh'),
+  hphosts: require('./lib/hphosts'),
 };
 
 module.exports.Redis = class Redis {
@@ -24,14 +25,14 @@ module.exports.Redis = class Redis {
 
     const errmsg = [];
     async.each(modules, (mod, next) => {
-      // console.log('run', mod);
+      console.log('run', mod);
 
       mod.fetch((dname, attrib, done) => {
         self.client_.rpush(dname, msgpack.encode(attrib), (err, reply) => {
           done();
         });
       }, (err) => {
-        // console.log('done:', mod);
+        console.log('done:', mod);
         if (err) {
           errmsg.push(err);
         }

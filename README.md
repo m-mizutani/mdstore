@@ -26,8 +26,9 @@ Supporting Blacklists
 
 - **DNS-BH – Malware Domain Blocklist**: [BH DNS Files](http://www.malwaredomains.com/?page_id=66), [Terms of Use](http://www.malwaredomains.com/?page_id=1508)
 - **MVPS**: [Blocking Unwanted Connections with a Hosts File](http://winhelp2002.mvps.org/hosts.htm)
+- **hpHosts**: [Download](https://hosts-file.net/?s=Download), [End User Licence Agreement](https://hosts-file.net/download/eula.txt)
 
-NOTE: Author has no concern with usage of this module. Please read each blacklist service's Terms of Use, particularly for business.
+NOTE: The author(s) of the module has no concern with usage of this module. Please read each blacklist service's Terms of Use, particularly for commercial use.
 
 
 Access to Redis by CLI
