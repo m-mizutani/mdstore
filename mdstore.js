@@ -12,27 +12,29 @@ const mdstore_modules = {
 };
 
 module.exports.Redis = class Redis {
-  constructor(db, port, host) {
-    this.client_ = redis.createClient(port, host);    
+  constructor(prefs = {}, db, port, host) {
+    this.client_ = redis.createClient(port, host);
+    this.prefs_ = prefs;
   }
 
   sync(callback) {
     const self = this;
 
     const modules = Object.keys(mdstore_modules).map((mod_name) => {
-      return new mdstore_modules[mod_name]();
+      const opt = self.prefs_[mod_name] || {};
+      return new mdstore_modules[mod_name](opt);
     });
 
     const errmsg = [];
     async.each(modules, (mod, next) => {
-      console.log('run', mod);
+      // console.log('run', mod);
 
       mod.fetch((dname, attrib, done) => {
         self.client_.rpush(dname, msgpack.encode(attrib), (err, reply) => {
           done();
         });
       }, (err) => {
-        console.log('done:', mod);
+        // console.log('done:', mod);
         if (err) {
           errmsg.push(err);
         }
