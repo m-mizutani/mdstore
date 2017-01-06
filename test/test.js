@@ -17,7 +17,7 @@ describe('redis', () => {
     before('basic', (done) => {
       md.flush((err) => {
         assert(err === null);
-        md.sync((err) => {
+        md.update((err) => {
           assert(err === null);
           done();
         });
@@ -62,7 +62,7 @@ describe('redis', () => {
     before('basic', (done) => {
       md.flush((err) => {
         assert(err === null);
-        md.sync((err) => {
+        md.update((err) => {
           assert(err === null);
           done();
         });
@@ -100,7 +100,7 @@ describe('redis', () => {
     before('basic', (done) => {
       md.flush((err) => {
         assert(err === null);
-        md.sync((err) => {
+        md.update((err) => {
           assert(err === null);
           done();
         });

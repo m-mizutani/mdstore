@@ -17,7 +17,7 @@ module.exports.Redis = class Redis {
     this.prefs_ = prefs;
   }
 
-  sync(callback) {
+  update(callback) {
     const self = this;
 
     const modules = Object.keys(mdstore_modules).map((mod_name) => {
