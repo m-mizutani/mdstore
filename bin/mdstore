@@ -3,6 +3,29 @@
 'use strict';
 
 const argv = require('argv');
+argv.option([
+  {
+	  name: 'host',
+	  short: 's',
+	  type : 'string',
+	  description :'redis host',
+	  example: '--host=localhost or -s localhost',
+  },
+  {
+	  name: 'port',
+	  short: 'p',
+	  type : 'int',
+	  description :'redis port',
+	  example: '--port=6379 or -p 6379',
+  },
+  {
+	  name: 'db',
+	  short: 'd',
+	  type : 'int',
+	  description :'redis db',
+	  example: '--db=0 or -d 0',
+  },
+]);
 
 const mdstore = require('../mdstore');
 
@@ -17,8 +40,15 @@ if (args.targets.length === 0) {
   usage_and_exit();
 }
 
+const redis_opt = {};
+const redis_opt_list = ['host', 'port', 'db'];
+redis_opt_list.map(key => {
+  if (args.options[key]) {
+    redis_opt[key] = args.options[key];
+  }
+});
 
-const mdredis = new mdstore.Redis();
+const mdredis = new mdstore.Redis({}, redis_opt);
 
 const cmd = {
   update() {

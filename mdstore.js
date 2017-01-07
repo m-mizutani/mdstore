@@ -22,7 +22,7 @@ module.exports.Redis = class Redis {
     };
 
     const opt_list = ['host', 'port', 'db', 'path', 'url'];
-    opt_list.forEach((key) => {
+    opt_list.map((key) => {
       if (opt[key] !== undefined) {
         redis_opt[key] = opt[key];
       }
