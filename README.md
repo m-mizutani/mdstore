@@ -40,6 +40,14 @@ $ sudo cp hosts.txt /etc/hosts         # Linux
 $ sudo cp hosts.txt /private/etc/hosts # macOS
 ```
 
+### CLI Options
+
+Following options are available for `mdstore`.
+
+- `-s` or `--host`: redis server host
+- `-p` or `--port`: redis server port
+- `-d` or `--db`: redis server db
+
 
 Example usage of mdstore library
 ----------
