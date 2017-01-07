@@ -12,11 +12,23 @@ const mdstore_modules = {
 };
 
 module.exports.Redis = class Redis {
-  constructor(prefs = {}, db, port, host) {
-    const opt = {
-      return_buffers: true,
+  constructor(prefs = {}, opt = {}) {
+    this.port_ = opt.port;
+    this.host_ = opt.host;
+    this.db_   = opt.db_;
+    
+    const redis_opt = {
+      return_buffers: true,      
     };
-    this.client_ = redis.createClient(port, host, opt);
+
+    const opt_list = ['host', 'port', 'db', 'path', 'url'];
+    opt_list.forEach((key) => {
+      if (opt[key] !== undefined) {
+        redis_opt[key] = opt[key];
+      }
+    });
+
+    this.client_ = redis.createClient(redis_opt);
     this.prefs_ = prefs;
   }
 
@@ -97,13 +109,5 @@ module.exports.Redis = class Redis {
     this.client_.flushdb((err, res) => {
       callback(err);
     });
-  }
-}
-
-module.exports.File = class File {
-  constructor(fpath) {
-  }
-
-  sync() {
   }
 }

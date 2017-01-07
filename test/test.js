@@ -119,4 +119,44 @@ describe('redis', () => {
     });
     
   });
+
+
+  context('change db', () => {
+    const opt1 = { db: 1 };
+    const opt2 = { db: 2 };
+
+    const md1 = new mdstore.Redis(dummy, opt1);
+    const md2 = new mdstore.Redis(dummy, opt2);
+    
+    before('basic', (done) => {
+      md1.flush((err1) => {
+        md1.update((err2) => {
+          md2.flush((err3) => {
+            assert(err1 === null);
+            assert(err2 === null);
+            assert(err3 === null);
+            done();
+          });
+        });
+      });
+    });
+
+    it('get domain name from updated db', (done) => {
+      md1.get('this.is.test.domain.com', (err, res) => {
+        assert(err === null);
+        assert(res.length > 0);
+        done();
+      });
+    });
+    
+    it('get domain name from flushed db', (done) => {
+      md2.get('this.is.test.domain.com', (err, res) => {
+        assert(err === null);
+        assert(res.length === 0);
+        done();
+      });
+    });
+  });
+
+  
 });
